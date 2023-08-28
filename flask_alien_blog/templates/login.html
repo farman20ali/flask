@@ -1,0 +1,74 @@
+{% extends 'layout.html' %} {% block title %} {{ params['blog_name'] }} - Coding
+Guide {% endblock %} {% block header %}
+<header
+  class="masthead"
+  style="background-image: url('{{url_for('static',filename='assets/img/home-bg.jpg')}}')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>{{ params['blog_name'] }}</h1>
+          <span class="subheading">admin login</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{% endblock %} {% block body %}
+
+<div class="text-center">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-7">
+        <form class="form-signin" action="/dashboard" method="post">
+          {% set fname = 'assets/img/'+ params['login_image'] %}
+          <img
+            class="mb-4"
+            src="{{url_for('static', filename=fname)}}"
+            alt=""
+            width="150"
+            height="150"
+          />
+          <h1 class="h3 mb-3 fontawesome" style="color: darkblue">
+            Admin Login
+          </h1>
+          <label for="inputEmail" class="sr-only">Email address</label>
+          <input
+            type="email"
+            name="email"
+            id="inputEmail"
+            class="form-control"
+            placeholder="Email address"
+            required
+            autofocus
+          />
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input
+            type="password"
+            name="pass"
+            id="inputPassword"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <div class="checkbox mb-3">
+            <label>
+              <input
+                name="remember-me"
+                type="checkbox"
+                value="remember-me"
+                style="color: rgb(178, 130, 130)"
+              />
+              Remember me
+            </label>
+          </div>
+          <button class="btn btn-outline-info" type="submit">Sign in</button>
+        </form>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

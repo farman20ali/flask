@@ -1,0 +1,17 @@
+{
+    "params": {
+        "local_server": true,
+        "local_uri": "mysql://root:@127.0.0.1/alienblog",
+        "prod_uri": "mysql://root:@localhost/alienblog",
+        "fb_url": "https://www.google.com",
+        "tw_url": "https://www.google.com",
+        "gt_url": "https://www.google.com",
+        "content-length": 70,
+        "login_image": "login-img.svg",
+        "blog_name": "Alien Blog",
+        "created_on": "2021",
+        "site_db": "sqlite:///site.db",
+        "home-page-posts": 5,
+        "upload_folder": "C:\\Users\\Haier\\Dropbox\\course_files\\python\\flask\\flask_project_harry\\static\\assets\\img"
+    }
+}

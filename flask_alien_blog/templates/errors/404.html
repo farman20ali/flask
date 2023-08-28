@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block header %}
+<header
+  class="masthead"
+  style="background-image: url('{{url_for('static',filename='assets/img/error404.jpg')}}')"
+></header>
+{% endblock %} {% block body %}
+<div class="text-center">
+  <div class="content-section">
+    <h1>Oops. Page Not Found (404)</h1>
+    <p>That page does not exist. Please try a different location</p>
+  </div>
+</div>
+{% endblock body %}

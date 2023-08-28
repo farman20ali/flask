@@ -1,0 +1,96 @@
+{% extends 'layout.html' %} {% block title %} {{params['blog_name']}} - Coding
+Guide {% endblock %} {% block header %}
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('{{url_for('static',filename='assets/img/dashboard-img.jpg')}}')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>{{current_user.username}}</h1>
+          <span class="subheading">Welcome to portal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %} {% block body %} {% set length = params["content-length"] | int
+%}
+
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      {% if user %}
+      <h1 class="mb-3">Posts by {{ user.username }} ({{ posts.total }})</h1>
+
+      {% endif %} {% for post in posts %} {% set imgprofile = 'assets/img/' +
+      post.author.image_file %}
+
+      <article class="media content-section">
+        <img
+          class="rounded-circle article-img img"
+          src="{{ url_for('static', filename=imgprofile ) }}"
+        />
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="/userpost/{{post.author.username}}"
+              >{{ post.author.username }}</a
+            >
+            <small class="text-muted"
+              >{{ post.date.strftime('%Y-%m-%d') }}</small
+            >
+          </div>
+          <h2>
+            <a class="article-title" href="/userpost/{{post.sno}}"
+              >{{ post.title }}</a
+            >
+          </h2>
+          <p class="article-content">{{ post.content[0:length] | safe }}</p>
+          {% if post.author == current_user %}
+          <div class="row">
+            <div class="col">
+              <a
+                class="btn btn-secondary btn-sm mt-1 mb-1"
+                href="/userpost/{{post.sno}}/update"
+                >Update</a
+              >
+            </div>
+            <div class="col">
+              <form
+                id="myForm"
+                action="/userpost/{{post.sno}}/delete"
+                method="POST"
+              >
+                <input
+                  class="btn btn-danger btn-sm m-1"
+                  type="submit"
+                  value="Delete"
+                />
+              </form>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </article>
+
+      <hr class="my-4" />
+
+      {% endfor %} {% for page_num in posts.iter_pages(left_edge=1,
+      right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if
+      user %} {% set page_url="/userpost/"+user.username+"?page="+page_num |
+      string %} {% else %} {% set page_url="/userpost?page="+page_num | string
+      %} {% endif %} {% if posts.page == page_num %}
+      <a class="btn btn-info mb-4" href="{{page_url}}">{{ page_num }}</a>
+      {% else %}
+      <a class="btn btn-outline-info mb-4" href="{{page_url}}"
+        >{{ page_num }}</a
+      >
+      {% endif %} {% else %} ... {% endif %} {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

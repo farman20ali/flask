@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block header %}
+<header
+  class="masthead"
+  style="background-image: url('{{url_for('static',filename='assets/img/error403.jpg')}}')"
+></header>
+{% endblock %} {% block body %}
+<div class="text-center">
+  <div class="content-section">
+    <h1>You don't have permission to do that (403)</h1>
+    <p>Please check your account and try again</p>
+  </div>
+</div>
+{% endblock body %}

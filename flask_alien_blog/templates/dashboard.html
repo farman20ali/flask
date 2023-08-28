@@ -1,0 +1,213 @@
+{% extends 'layout.html' %} {% block title %} {{params['blog_name']}} - Coding
+Guide {% endblock %} {% block header %}
+<style>
+  #container {
+    aspect-ratio: 3/2;
+    padding: 40px 0;
+    margin: auto;
+    border: solid black 2px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+  }
+</style>
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('{{url_for('static',filename='assets/img/dashboard-img.jpg')}}')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          {% set fname = 'assets/img/'+ params['login_image'] %}
+
+          <img
+            class="mb-4"
+            src="{{url_for('static', filename=fname)}}"
+            alt=""
+            width="100"
+            height="100"
+          />
+
+          <h1>Admin Dashboard</h1>
+          <span class="subheading">Coding Blog by Alien</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+{% endblock %} {% block body %}
+
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <div>
+        <h1>Uploading files</h1>
+        <form
+          name="UploadForm"
+          id="uploadForm"
+          action="/uploader"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <div class="form-floating">
+            <input
+              class="form-control"
+              id="file"
+              name="file"
+              type="file"
+              data-sb-validations="required"
+              required
+            />
+            <label for="file">file</label>
+            <div class="invalid-feedback" data-sb-feedback="name:required">
+              A name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="UploadFormButton">
+              Upload
+            </button>
+          </div>
+        </form>
+      </div>
+      <hr class="my-4" />
+      <h1>Add New Post</h1>
+      <a href="/edit/0"
+        ><button class="btn btn-primary text-uppercase">Add</button></a
+      >
+      <hr class="my-4" />
+
+      {% if posts %}
+      <h1>Posts</h1>
+
+      <table class="table">
+        <tbody>
+          <thead>
+            <tr>
+              <th>serial no</th>
+              <th>post title</th>
+              <th>edit</th>
+              <th>delete</th>
+              <th>view</th>
+            </tr>
+          </thead>
+        </tbody>
+      </table>
+      <div id="container">
+        <table class="table">
+          {% for post in posts %}
+          <!-- here the todo or post from database will be fetched -->
+          <!-- Post preview-->
+
+          <tr>
+            <td>{{post.sno}}</td>
+            <td>{{post.title}}</td>
+            <td>
+              <a href="/edit/{{post.sno}}" target="_blank"
+                ><button class="btn btn-primary text-uppercase">Edit</button></a
+              >
+            </td>
+            <td>
+              <a href="/delete/{{post.sno}}"
+                ><button class="btn btn-primary text-uppercase">
+                  Delete
+                </button></a
+              >
+            </td>
+            <td>
+              <a href="/post/{{post.slug}}" target="_blank"
+                ><button class="btn btn-primary text-uppercase">View</button></a
+              >
+            </td>
+          </tr>
+          <!-- Divider-->
+          <!-- <hr class="my-4" /> -->
+
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+
+      <hr class="my-4" />
+      {% if contacts %}
+      <h1 class="text-center">Contacts</h1>
+      <table class="table">
+        <tbody>
+          <thead>
+            <tr>
+              <th>serial no</th>
+              <th>name</th>
+              <th>view</th>
+              <th>delete</th>
+            </tr>
+          </thead>
+        </tbody>
+      </table>
+      <div id="container">
+        <table class="table">
+          {% for contact in contacts %}
+          <!-- here the todo or post from database will be fetched -->
+          <!-- Post preview-->
+          <tr>
+            <td>{{contact.sno}}</td>
+            <td>{{contact.name}}</td>
+            <td>
+              <a href="/contact/view/{{contact.sno}}"
+                ><button class="btn btn-primary text-uppercase">View</button></a
+              >
+            </td>
+            <td>
+              <a href="/contact/delete/{{contact.sno}}"
+                ><button class="btn btn-primary text-uppercase">
+                  Delete
+                </button></a
+              >
+            </td>
+          </tr>
+          <!-- Divider-->
+          <!-- <hr class="my-4" /> -->
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+
+      <hr class="my-4" />
+      {% if files %}
+      <h1 class="text-center">Images</h1>
+      <table class="table">
+        <tbody>
+          <thead>
+            <tr>
+              <th>name</th>
+              <th>view</th>
+            </tr>
+          </thead>
+        </tbody>
+      </table>
+      <div id="container">
+        <table class="table">
+          {% for file in files %}
+          <!-- here the todo or post from database will be fetched -->
+          <!-- Post preview-->
+          <tr>
+            <td>{{file}}</td>
+            <td>
+              <a href="/image/{{file}}" target="_blank"
+                ><button class="btn btn-primary text-uppercase">View</button></a
+              >
+            </td>
+          </tr>
+          <!-- Divider-->
+          <!-- <hr class="my-4" /> -->
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
